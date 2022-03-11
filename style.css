@@ -33,15 +33,16 @@ body {
 }
 
 .item-img {
-    max-height: 150px;
+    height: 100%;
+    width: 140px;
+
     margin-right: 10px;
+    object-fit: cover;
 }
 
 .shop {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 600px;
-    max-height: 600px;
     width: 100%;
 }
 
@@ -186,10 +187,24 @@ header {
     .container {
         grid-template-columns: 1fr;
     }
+    .item-img {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .item div h3 {
+        font-size: 1.7rem;
+    }
+    .item div p {
+        font-size: 1.1rem;
+    }
 }
 @media only screen and (max-width: 705px) {
     .shop {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+    }
+    .item {
+        align-items: center;
     }
 }
 

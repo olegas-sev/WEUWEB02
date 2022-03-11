@@ -28,7 +28,7 @@ const renderShop = function () {
         )
         let template = `
     <div class="item">
-      <img src="${item.src}" class="item-img" /> 
+      <img src="${item.src}" class="item-img"/>
       <div><h3>${item.name}</h3>
       <p>${
           item.currency == "$"
