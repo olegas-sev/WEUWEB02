@@ -49,7 +49,6 @@ const renderShop = function () {
 
 const getLocalCartItems = function () {
     const localCart = localStorage.getItem("localCart")
-    console.log(localCart)
     if (localCart == null) return
     // set items
     cart = JSON.parse(localCart)
@@ -60,7 +59,6 @@ const getLocalCartItems = function () {
 
 const removeItem = function (id) {
     const filtered = cart.filter((item) => item.id !== id)
-    console.log("Filtered", filtered)
     cart = filtered
     localStorage.setItem("localCart", JSON.stringify(cart))
     updateCartView()
@@ -136,7 +134,6 @@ const fetchItems = async function () {
         renderShop()
         attachListeners()
     } catch (e) {
-        console.log("Failed to fetch data")
         let template = `
         <div class="failed-fetch">
             <h1>Fetching data from API was unsuccessfull, please reach out to <a href="emailto:support@webshop.se">support@webshop.se</a></h1>
