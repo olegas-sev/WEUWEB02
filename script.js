@@ -4,8 +4,20 @@ let items = []
 
 let cart = []
 
-const renderJSON = function () {
-    document.querySelector("code").textContent = JSON.stringify(cart)
+const renderError = function (heading, message) {
+    const alertEl = document.querySelector(".alert")
+    alertEl.classList.remove("hidden")
+    alertEl.style.opacity = 100
+    alertEl.querySelector("h3").textContent = heading
+    alertEl.querySelector("p").textContent = message
+    setTimeout(() => {
+        alertEl.style.opacity = 0
+        alertEl.classList.add("hidden")
+    }, 5000)
+}
+
+const totalPrice = function () {
+    return cart.reduce((acc, curr) => (acc += +curr.price), 0)
 }
 
 const renderShop = function () {
@@ -17,7 +29,7 @@ const renderShop = function () {
         let template = `
     <div class="item">
       <img src="${item.src}" class="item-img" /> 
-      <h3>${item.name}</h3>
+      <div><h3>${item.name}</h3>
       <p>${
           item.currency == "$"
               ? `<span class="currency">${item.currency}</span> <span class="price">${item.price}</span>`
@@ -28,20 +40,30 @@ const renderShop = function () {
       ${sizes}
       </select>
 
-      <button class="add-to-cart">Add to cart</button>
+      <button class="add-to-cart">Add to cart</button></div>
     </div>
     `
         shopEl.insertAdjacentHTML("beforeend", template)
     })
 }
 
+const getLocalCartItems = function () {
+    const localCart = localStorage.getItem("localCart")
+    console.log(localCart)
+    if (localCart == null) return
+    // set items
+    cart = JSON.parse(localCart)
+    // render items
+    updateCartView()
+    // Render json
+}
+
 const removeItem = function (id) {
     const filtered = cart.filter((item) => item.id !== id)
     console.log("Filtered", filtered)
     cart = filtered
-    console.log("Cart", cart)
+    localStorage.setItem("localCart", JSON.stringify(cart))
     updateCartView()
-    renderJSON()
 }
 
 const updateCartView = function () {
@@ -62,13 +84,16 @@ const updateCartView = function () {
         `
         cartEl.insertAdjacentHTML("beforeend", template)
     })
+    const total = totalPrice()
+
+    cartEl.parentElement.querySelector("span").textContent = total
 }
 
 const attachListeners = function () {
     const addToCartBtns = document.querySelectorAll(".add-to-cart")
     addToCartBtns.forEach((btn) => {
         btn.addEventListener("click", function () {
-            const src = btn.parentElement.querySelector("img").src
+            const src = btn.parentElement.parentElement.querySelector("img").src
             const name = btn.parentElement.querySelector("h3").innerHTML
             const price = btn.parentElement.querySelector(".price").innerHTML
             const currency =
@@ -76,6 +101,14 @@ const attachListeners = function () {
             const size =
                 btn.parentElement.querySelector("select").selectedOptions[0]
                     .value
+
+            if (!size) {
+                renderError(
+                    "You didn't select a size for the product",
+                    "Please choose a shoe size and try again"
+                )
+                return
+            }
             const item = {
                 id: Date.now(),
                 name,
@@ -85,24 +118,33 @@ const attachListeners = function () {
                 size,
             }
             cart.push(item)
-            renderJSON()
+            localStorage.setItem("localCart", JSON.stringify(cart))
             updateCartView()
         })
     })
 }
 
 const fetchItems = async function () {
-    const { items: data } = await fetch("http://localhost:3000/items").then(
-        (res) => res.json()
-    )
-    if (data) {
+    try {
+        const { items: data } = await fetch("http://localhost:3000/items").then(
+            (res) => res.json()
+        )
+        getLocalCartItems()
         data.forEach((item) => {
             items.push(item)
         })
         renderShop()
         attachListeners()
-    } else {
-        console.error("Failed to fetch data")
+    } catch (e) {
+        console.log("Failed to fetch data")
+        let template = `
+        <div class="failed-fetch">
+            <h1>Fetching data from API was unsuccessfull, please reach out to <a href="emailto:support@webshop.se">support@webshop.se</a></h1>
+        </div>
+        `
+        shopEl.style.display = ""
+
+        shopEl.insertAdjacentHTML("beforeend", template)
     }
 }
 
@@ -110,7 +152,6 @@ const init = function () {
     // Code that runs when application starts
     // Render items
     fetchItems()
-    renderJSON()
 }
 
 init()

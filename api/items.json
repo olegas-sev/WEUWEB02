@@ -3,7 +3,7 @@
         {
             "name": "Jordan Dior",
             "src": "https://www.pricerunner.se/product/1200x630/3000611952/Nike-x-Dior-Air-Jordan-1-High-M-Wolf-Grey-Sail-Photon-Dust-White.jpg",
-            "price": "20000",
+            "price": 40,
             "sizes": [
                 25,
                 26,
@@ -15,7 +15,7 @@
         {
             "name": "Jordan Retro OG Dark Marina",
             "src": "https://images.stockx.com/images/Air-Jordan-1-Retro-High-OG-Dark-Marina-Blue-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1642023273",
-            "price": "4000",
+            "price": 20,
             "sizes": [
                 25,
                 26,
@@ -27,7 +27,7 @@
         {
             "name": "Jordan Uni Blue",
             "src": "https://www.highsnobiety.com/static-assets/thumbor/nI3VcQHauvbw62L6WpDwSXoTS3A=/1600x1067/www.highsnobiety.com/static-assets/wp-content/uploads/2021/02/12163548/air-jordan-1-university-blue-release-info-02.jpg",
-            "price": "100",
+            "price": 100,
             "sizes": [
                 25,
                 26,
@@ -39,7 +39,7 @@
         {
             "name": "Jordan Skin Pink",
             "src": "https://d3re0f381bckq9.cloudfront.net/48184667_screenshot-20200709-184200-2_720x716.jpg",
-            "price": "40250",
+            "price": 10,
             "sizes": [
                 25,
                 26,
