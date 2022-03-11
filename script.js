@@ -28,14 +28,14 @@ const renderShop = function () {
         )
         let template = `
     <div class="item">
-      <img src="${item.src}" class="item-img"/>
-      <div><h3>${item.name}</h3>
+      <img src="${item.src}" class="item-img" alt="Shoes ${item.name}"/>
+      <div><h2>${item.name}</h2>
       <p>${
           item.currency == "$"
               ? `<span class="currency">${item.currency}</span> <span class="price">${item.price}</span>`
               : `<span class="price">${item.price}</span> <span class="currency">${item.currency}</span>`
       }</p>
-      <select name="sizes" id="size-select">
+      <select name="sizes">
       <option value="">Please choose a size</option>
       ${sizes}
       </select>
@@ -71,7 +71,7 @@ const updateCartView = function () {
     cart.forEach((item) => {
         const template = `
         <div class="cart-item">
-        <div><img src="${item.src}" height="80px"/></div>
+        <div><img src="${item.src}" height="80px" alt="Shoes inside cart named ${item.name}"/></div>
         <span><b>${item.name}</b></span>
         
         <span>
@@ -92,7 +92,7 @@ const attachListeners = function () {
     addToCartBtns.forEach((btn) => {
         btn.addEventListener("click", function () {
             const src = btn.parentElement.parentElement.querySelector("img").src
-            const name = btn.parentElement.querySelector("h3").innerHTML
+            const name = btn.parentElement.querySelector("h2").innerHTML
             const price = btn.parentElement.querySelector(".price").innerHTML
             const currency =
                 btn.parentElement.querySelector(".currency").innerHTML

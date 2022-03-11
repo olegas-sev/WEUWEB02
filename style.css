@@ -74,7 +74,7 @@ body {
     background: #f2f2f2;
 }
 
-.item div h3 {
+.item div h2 {
     margin-bottom: 5px;
 }
 .item div p {
@@ -191,7 +191,7 @@ header {
         width: 100%;
         margin-bottom: 5px;
     }
-    .item div h3 {
+    .item div h2 {
         font-size: 1.7rem;
     }
     .item div p {
