@@ -4,6 +4,9 @@ let items = []
 
 let cart = []
 
+const hideSpinner = function () {
+    document.querySelector(".loading").parentElement.style.display = "none"
+}
 const renderError = function (heading, message) {
     const alertEl = document.querySelector(".alert")
     alertEl.classList.remove("hidden")
@@ -21,6 +24,8 @@ const totalPrice = function () {
 }
 
 const renderShop = function () {
+    // Make columns for items (it's added now because of issues wtih spinner)
+    shopEl.style.gridTemplateColumns = "1fr 1fr"
     items.forEach((item) => {
         let sizes = item.sizes.reduce(
             (val, curr) => (val += `<option value="${curr}">${curr}</option>`),
@@ -131,6 +136,7 @@ const fetchItems = async function () {
         data.forEach((item) => {
             items.push(item)
         })
+        hideSpinner()
         renderShop()
         attachListeners()
     } catch (e) {
@@ -139,7 +145,7 @@ const fetchItems = async function () {
             <h1>Fetching data from API was unsuccessfull, please reach out to <a href="emailto:support@webshop.se">support@webshop.se</a></h1>
         </div>
         `
-        shopEl.style.display = ""
+        hideSpinner()
 
         shopEl.insertAdjacentHTML("beforeend", template)
     }
